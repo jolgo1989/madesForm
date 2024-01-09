@@ -62,30 +62,39 @@ const Form = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: "row", // Alinear los elementos en una fila
             gap: 2,
+            //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
           }}
         >
           {/* Nombre */}
           <TextField
-            id="outlined-basic"
+            id="nombre-input"
             label="Nombre"
             variant="outlined"
             sx={{
-              width: 1 / 2,
+              width: "50%", // Ocupar el 50% del ancho del contenedor
             }}
           />
 
           {/* Apellido */}
           <TextField
-            id="outlined-basic"
+            id="apellido-input"
             label="Apellido"
             variant="outlined"
             sx={{
-              width: 1 / 2,
+              width: "50%", // Ocupar el 50% del ancho del contenedor
             }}
           />
         </Box>
-        <Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            mt: 2, // Margen superior entre las filas
+          }}
+        >
           {/* Tipo de documento */}
           <Autocomplete
             id="selector-tipo"
@@ -93,10 +102,8 @@ const Form = () => {
             getOptionLabel={(option) => option.label}
             value={valor}
             onChange={handleChange}
-            // style={{ width: 300 }}
             sx={{
-              mt: 4,
-              width: 1 / 2,
+              width: "50%", // Ocupar el 50% del ancho del contenedor
             }}
             renderInput={(params) => (
               <TextField
@@ -107,6 +114,7 @@ const Form = () => {
             )}
           />
 
+          {/* Número de documento */}
           <TextField
             id="numero-input"
             label="Número de documento"
@@ -114,9 +122,46 @@ const Form = () => {
             value={numero}
             onChange={validarNumero}
             sx={{
-              mt: 4,
-              width: 1 / 2,
+              width: "50%", // Ocupar el 50% del ancho del contenedor
             }}
+          />
+
+          <TextField
+            id="numero-input"
+            label="Celular"
+            variant="outlined"
+            value={numero}
+            onChange={validarNumero}
+            sx={{
+              width: "50%", // Ocupar el 50% del ancho del contenedor
+            }}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            mt: 2, // Margen superior entre las filas
+          }}
+        >
+          <TextField
+            id="numero-input"
+            label="Telefono fijo"
+            variant="outlined"
+            value={numero}
+            onChange={validarNumero}
+            sx={{
+              width: "30%", // Ocupar el 50% del ancho del contenedor
+            }}
+          />
+
+          <TextField
+            id="nombre-input"
+            label="Dirección"
+            variant="outlined"
+            fullWidth
+            sx={{}}
           />
         </Box>
       </form>
