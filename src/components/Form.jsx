@@ -1,5 +1,14 @@
-import { Paper, TextField, Box, Autocomplete } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import {
+  Paper,
+  TextField,
+  Box,
+  Autocomplete,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 
 import { useForm } from "react-hook-form";
 
@@ -13,11 +22,29 @@ const tipos = [
 
 const Form = () => {
   // Estado del valor seleccionado
-  const [valor, setValor] = React.useState(null);
+  const [valor, setValor] = useState(null);
 
   // Manejador del cambio de valor
   const handleChange = (event, newValue) => {
     setValor(newValue);
+  };
+
+  // TextField solo numero
+  const [numero, setNumero] = useState("");
+
+  const handleChangeNumero = (event) => {
+    setNumero(event.target.value);
+  };
+
+  const validarNumero = (event) => {
+    const valor = event.target.value;
+    if (isNaN(valor) || valor.includes(".")) {
+      // No es un número válido
+      event.target.value = numero; // Restaurar el valor anterior
+    } else {
+      // Es un número válido
+      handleChangeNumero(event); // Actualizar el estado
+    }
   };
 
   return (
@@ -78,6 +105,18 @@ const Form = () => {
                 variant="outlined"
               />
             )}
+          />
+
+          <TextField
+            id="numero-input"
+            label="Número de documento"
+            variant="outlined"
+            value={numero}
+            onChange={validarNumero}
+            sx={{
+              mt: 4,
+              width: 1 / 2,
+            }}
           />
         </Box>
       </form>
