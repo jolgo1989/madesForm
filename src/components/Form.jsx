@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {
-  Paper,
-  TextField,
-  Box,
-  Autocomplete,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { Paper, TextField, Box, Autocomplete } from "@mui/material";
+
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useForm } from "react-hook-form";
 
@@ -45,6 +41,14 @@ const Form = () => {
       // Es un número válido
       handleChangeNumero(event); // Actualizar el estado
     }
+  };
+
+  // Estado para guardar la fecha seleccionada
+  const [date, setDate] = useState("");
+
+  // Función para manejar el cambio de fecha
+  const handleChangeFecha = (event) => {
+    setDate(event.target.value);
   };
 
   return (
@@ -165,6 +169,11 @@ const Form = () => {
           />
         </Box>
       </form>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={["DatePicker"]}>
+          <DatePicker label="Fecha de nacimiento" />
+        </DemoContainer>
+      </LocalizationProvider>
     </Paper>
   );
 };
