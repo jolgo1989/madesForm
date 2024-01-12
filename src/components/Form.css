@@ -1,5 +1,9 @@
 .form {
-height: 4000px;
-width: 400px;
-background-color: brown;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.userIcon {
+  font-size: 125px;
 }

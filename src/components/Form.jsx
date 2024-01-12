@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import "./Form.css";
 import { Paper, TextField, Box, Autocomplete } from "@mui/material";
 
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { FaRegUser } from "react-icons/fa";
+
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 import { useForm } from "react-hook-form";
 
@@ -57,16 +65,16 @@ const Form = () => {
         mt: 8,
         px: 4,
         py: 2,
-        maxWidth: 800,
+        maxWidth: 1000,
         mx: "auto",
       }}
       elevation={3}
     >
-      <form>
+      <form className="form">
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row", // Alinear los elementos en una fila
+            flexDirection: "column", // Alinear los elementos en una fila
             gap: 2,
             //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
           }}
@@ -77,28 +85,17 @@ const Form = () => {
             label="Nombre"
             variant="outlined"
             sx={{
-              width: "50%", // Ocupar el 50% del ancho del contenedor
+              width: "180%",
             }}
           />
 
-          {/* Apellido */}
           <TextField
             id="apellido-input"
             label="Apellido"
             variant="outlined"
-            sx={{
-              width: "50%", // Ocupar el 50% del ancho del contenedor
-            }}
+            sx={{ width: "180%" }}
           />
-        </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            mt: 2, // Margen superior entre las filas
-          }}
-        >
           {/* Tipo de documento */}
           <Autocomplete
             id="selector-tipo"
@@ -106,9 +103,7 @@ const Form = () => {
             getOptionLabel={(option) => option.label}
             value={valor}
             onChange={handleChange}
-            sx={{
-              width: "50%", // Ocupar el 50% del ancho del contenedor
-            }}
+            sx={{}}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -125,55 +120,102 @@ const Form = () => {
             variant="outlined"
             value={numero}
             onChange={validarNumero}
-            sx={{
-              width: "50%", // Ocupar el 50% del ancho del contenedor
-            }}
-          />
-
-          <TextField
-            id="numero-input"
-            label="Celular"
-            variant="outlined"
-            value={numero}
-            onChange={validarNumero}
-            sx={{
-              width: "50%", // Ocupar el 50% del ancho del contenedor
-            }}
+            sx={{ width: "180%" }}
           />
         </Box>
 
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column", // Alinear los elementos en una fila
             gap: 2,
-            mt: 2, // Margen superior entre las filas
+            //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
           }}
         >
-          <TextField
-            id="numero-input"
-            label="Telefono fijo"
-            variant="outlined"
-            value={numero}
-            onChange={validarNumero}
-            sx={{
-              width: "30%", // Ocupar el 50% del ancho del contenedor
-            }}
-          />
+          <FaRegUser className="userIcon" />
 
-          <TextField
-            id="nombre-input"
-            label="Dirección"
-            variant="outlined"
-            fullWidth
-            sx={{}}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row", // Alinear los elementos en una fila
+              gap: 2,
+            }}
+          >
+            <TextField
+              id="numero-input"
+              label="Telefono fijo"
+              variant="outlined"
+              value={numero}
+              onChange={validarNumero}
+              sx={{
+                width: "70%", // Ocupar el 50% del ancho del contenedor
+              }}
+            />
+
+            <TextField
+              id="numero-input"
+              label="Celular"
+              variant="outlined"
+              value={numero}
+              onChange={validarNumero}
+              sx={{
+                width: "70%", // Ocupar el 50% del ancho del contenedor
+              }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row", // Alinear los elementos en una fila
+              gap: 2,
+            }}
+          >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker label="Fecha de nacimiento" />
+              </DemoContainer>
+            </LocalizationProvider>
+
+            <FormControl>
+              <FormLabel
+                sx={{
+                  display: "flex",
+                  justifyContent: "center", // Alinear los elementos en una fila
+                }}
+                id="demo-radio-buttons-group-label"
+              >
+                Gender
+              </FormLabel>
+              <RadioGroup
+                sx={{
+                  display: "flex",
+                  flexDirection: "row", // Alinear los elementos en una fila
+                }}
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
         </Box>
       </form>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker"]}>
-          <DatePicker label="Fecha de nacimiento" />
-        </DemoContainer>
-      </LocalizationProvider>
     </Paper>
   );
 };
