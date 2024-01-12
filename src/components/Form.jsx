@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import "./Form.css";
-import { Paper, TextField, Box, Autocomplete } from "@mui/material";
+import {
+  Paper,
+  TextField,
+  Box,
+  Autocomplete,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FaRegUser } from "react-icons/fa";
-
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 import { useForm } from "react-hook-form";
 
@@ -65,7 +69,7 @@ const Form = () => {
         mt: 8,
         px: 4,
         py: 2,
-        maxWidth: 1000,
+        maxWidth: 1100,
         mx: "auto",
       }}
       elevation={3}
@@ -122,6 +126,15 @@ const Form = () => {
             onChange={validarNumero}
             sx={{ width: "180%" }}
           />
+
+          <TextField
+            id="nombre-input"
+            label="Dirección"
+            variant="outlined"
+            sx={{
+              width: "180%",
+            }}
+          />
         </Box>
 
         <Box
@@ -132,7 +145,10 @@ const Form = () => {
             //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
           }}
         >
-          <FaRegUser className="userIcon" />
+          {/* Imagen */}
+          <div className="userIcon">
+            <FaRegUser />
+          </div>
 
           <Box
             sx={{
@@ -199,20 +215,46 @@ const Form = () => {
                 <FormControlLabel
                   value="female"
                   control={<Radio />}
-                  label="Female"
+                  label="Femenino"
                 />
                 <FormControlLabel
                   value="male"
                   control={<Radio />}
-                  label="Male"
+                  label="Masculino"
                 />
                 <FormControlLabel
                   value="other"
                   control={<Radio />}
-                  label="Other"
+                  label="Otro"
                 />
               </RadioGroup>
             </FormControl>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row", // Alinear los elementos en una fila
+              gap: 2,
+            }}
+          >
+            <TextField
+              id="nombre-input"
+              label="Nombre"
+              variant="outlined"
+              sx={{
+                width: "180%",
+              }}
+            />
+
+            <TextField
+              id="nombre-input"
+              label="Nombre"
+              variant="outlined"
+              sx={{
+                width: "180%",
+              }}
+            />
           </Box>
         </Box>
       </form>
