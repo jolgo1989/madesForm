@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import "./Form.css";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { FaRegUser } from "react-icons/fa";
 import {
   Paper,
   TextField,
@@ -11,12 +16,6 @@ import {
   FormControl,
   FormLabel,
 } from "@mui/material";
-
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { FaRegUser } from "react-icons/fa";
 
 import { useForm } from "react-hook-form";
 
@@ -30,37 +29,39 @@ const tipos = [
 
 const Form = () => {
   // Estado del valor seleccionado
-  const [valor, setValor] = useState(null);
+  const [valorSeleccion, setValor] = useState(null);
 
   // Manejador del cambio de valor
   const handleChange = (event, newValue) => {
+    //!Pendiente con el metodo event
     setValor(newValue);
   };
 
   // TextField solo numero
-  const [numero, setNumero] = useState("");
 
-  const handleChangeNumero = (event) => {
-    setNumero(event.target.value);
-  };
+  const [numeroDocumento, setNumeroDocumento] = useState("");
+  const [telefonoFijo, setTelefonoFijo] = useState("");
+  const [celular, setCelular] = useState("");
 
-  const validarNumero = (event) => {
+  const handleChangeNumeroDocumento = (event) => {
     const valor = event.target.value;
-    if (isNaN(valor) || valor.includes(".")) {
-      // No es un número válido
-      event.target.value = numero; // Restaurar el valor anterior
-    } else {
-      // Es un número válido
-      handleChangeNumero(event); // Actualizar el estado
+    if (!isNaN(valor) && !valor.includes(".")) {
+      setNumeroDocumento(valor);
     }
   };
 
-  // Estado para guardar la fecha seleccionada
-  const [date, setDate] = useState("");
+  const handleChangeTelefonoFijo = (event) => {
+    const valor = event.target.value;
+    if (!isNaN(valor) && !valor.includes(".")) {
+      setTelefonoFijo(valor);
+    }
+  };
 
-  // Función para manejar el cambio de fecha
-  const handleChangeFecha = (event) => {
-    setDate(event.target.value);
+  const handleChangeCelular = (event) => {
+    const valor = event.target.value;
+    if (!isNaN(valor) && !valor.includes(".")) {
+      setCelular(valor);
+    }
   };
 
   return (
@@ -105,7 +106,7 @@ const Form = () => {
             id="selector-tipo"
             options={tipos}
             getOptionLabel={(option) => option.label}
-            value={valor}
+            value={valorSeleccion}
             onChange={handleChange}
             sx={{}}
             renderInput={(params) => (
@@ -119,11 +120,11 @@ const Form = () => {
 
           {/* Número de documento */}
           <TextField
-            id="numero-input"
+            id="numero-documento-input"
             label="Número de documento"
             variant="outlined"
-            value={numero}
-            onChange={validarNumero}
+            value={numeroDocumento}
+            onChange={handleChangeNumeroDocumento}
             sx={{ width: "180%" }}
           />
 
@@ -158,25 +159,21 @@ const Form = () => {
             }}
           >
             <TextField
-              id="numero-input"
-              label="Telefono fijo"
+              id="telefono-fijo-input"
+              label="Teléfono fijo"
               variant="outlined"
-              value={numero}
-              onChange={validarNumero}
-              sx={{
-                width: "70%", // Ocupar el 50% del ancho del contenedor
-              }}
+              value={telefonoFijo}
+              onChange={handleChangeTelefonoFijo}
+              sx={{ width: "70%" }}
             />
 
             <TextField
-              id="numero-input"
+              id="celular-input"
               label="Celular"
               variant="outlined"
-              value={numero}
-              onChange={validarNumero}
-              sx={{
-                width: "70%", // Ocupar el 50% del ancho del contenedor
-              }}
+              value={celular}
+              onChange={handleChangeCelular}
+              sx={{ width: "70%" }}
             />
           </Box>
 
@@ -201,7 +198,7 @@ const Form = () => {
                 }}
                 id="demo-radio-buttons-group-label"
               >
-                Gender
+                Genero
               </FormLabel>
               <RadioGroup
                 sx={{
@@ -240,7 +237,7 @@ const Form = () => {
           >
             <TextField
               id="nombre-input"
-              label="Nombre"
+              label="Correo#1"
               variant="outlined"
               sx={{
                 width: "180%",
@@ -249,7 +246,7 @@ const Form = () => {
 
             <TextField
               id="nombre-input"
-              label="Nombre"
+              label="Correo#2"
               variant="outlined"
               sx={{
                 width: "180%",
