@@ -39,7 +39,7 @@ const Form = () => {
     setValor(newValue);
   };
 
-  // TextField solo numero
+  //! TextField solo numero Analizarlo
 
   const [numeroDocumento, setNumeroDocumento] = useState("");
   const [telefonoFijo, setTelefonoFijo] = useState("");
@@ -66,6 +66,11 @@ const Form = () => {
     }
   };
 
+  //Funcion para obtener los datos del formulario
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
     <Paper
       sx={{
@@ -77,11 +82,7 @@ const Form = () => {
       }}
       elevation={3}
     >
-      <form
-        onSubmit={handleSubmit(() => {
-          console.log("Formulario enviado"); // función que se pasa al evento onSubmit y maneja la lógica del envío del formulario (por eso no se actualiza)
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <div className="form">
           <Box
             sx={{
@@ -115,14 +116,15 @@ const Form = () => {
               id="selector-tipo"
               options={tipos}
               getOptionLabel={(option) => option.label}
-              value={valorSeleccion}
-              onChange={handleChange}
+              // value={valorSeleccion}
+              // onChange={handleChange}
               sx={{}}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   label="Tipo de documento"
                   variant="outlined"
+                  {...register("tipoDeDocumento")}
                 />
               )}
             />
@@ -199,7 +201,10 @@ const Form = () => {
             >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DatePicker"]}>
-                  <DatePicker label="Fecha de nacimiento" />
+                  <DatePicker
+                    {...register("fechaNacimiento")}
+                    label="Fecha de nacimiento"
+                  />
                 </DemoContainer>
               </LocalizationProvider>
 
@@ -255,7 +260,7 @@ const Form = () => {
                 sx={{
                   width: "180%",
                 }}
-                {...register("correo")}
+                {...register("correoUno")}
               />
 
               <TextField
