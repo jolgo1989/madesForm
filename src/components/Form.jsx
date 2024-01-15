@@ -104,7 +104,10 @@ const Form = () => {
               label="Nombre *"
               variant="outlined"
               {...register("nombre", {
-                required: "El campo nombre es obligatorio", // mensaje personalizado
+                required: {
+                  value: true,
+                  message: "El campo nombre es obligatorio", // mensaje personalizado
+                },
               })}
               //Todos los campos que devuelva la funcion register seran asignados a TextField
               error={errors.nombre} // asignar el error al atributo error
@@ -218,10 +221,7 @@ const Form = () => {
             >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DatePicker"]}>
-                  <DatePicker
-                    {...register("fechaNacimiento")}
-                    label="Fecha de nacimiento"
-                  />
+                  <DatePicker label="Fecha de nacimiento" />
                 </DemoContainer>
               </LocalizationProvider>
 
@@ -275,7 +275,14 @@ const Form = () => {
                 label="Correo principal *"
                 variant="outlined"
                 {...register("correoUno", {
-                  required: "El campo correo principal es obligatorio", // mensaje personalizado
+                  required: {
+                    value: true,
+                    message: "El campo correo principal es obligatorio", // mensaje personalizado
+                  },
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Correo no valido",
+                  },
                 })}
                 error={errors.correoUno} // asignar el error al atributo error
                 helperText={errors.correoUno?.message} // mostrar el mensaje de error
@@ -289,7 +296,14 @@ const Form = () => {
                 label="Correo secundario *"
                 variant="outlined"
                 {...register("correoDos", {
-                  required: "El campo correo secundario es obligatorio", // mensaje personalizado
+                  required: {
+                    value: true,
+                    message: "El campo correo secundario es obligatorio", // mensaje personalizado
+                  },
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Correo no valido",
+                  },
                 })}
                 error={errors.correoDos} // asignar el error al atributo error
                 helperText={errors.correoDos?.message} // mostrar el mensaje de error
