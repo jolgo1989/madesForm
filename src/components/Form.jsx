@@ -28,7 +28,13 @@ const tipos = [
 ];
 
 const Form = () => {
-  const { register, handleSubmit } = useForm(); //Registrar cada input
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm(); //Registrar cada input
+
+  console.log(errors);
 
   // Estado del valor seleccionado
   const [valorSeleccion, setValor] = useState(null);
@@ -97,10 +103,15 @@ const Form = () => {
               id="nombre-input"
               label="Nombre"
               variant="outlined"
+              {...register("nombre", {
+                required: "El campo nombre es obligatorio", // mensaje personalizado
+              })}
               sx={{
                 width: "180%",
               }}
-              {...register("nombre")} //Todos los campos que devuelva la funcion register seran asignados a TextField
+              //Todos los campos que devuelva la funcion register seran asignados a TextField
+              error={errors.nombre} // asignar el error al atributo error
+              helperText={errors.nombre?.message} // mostrar el mensaje de error
             />
 
             <TextField
@@ -110,7 +121,6 @@ const Form = () => {
               sx={{ width: "180%" }}
               {...register("Apellido")}
             />
-
             {/* Tipo de documento */}
             <Autocomplete
               id="selector-tipo"
@@ -128,7 +138,6 @@ const Form = () => {
                 />
               )}
             />
-
             {/* Número de documento */}
             <TextField
               id="numero-documento-input"
@@ -139,7 +148,6 @@ const Form = () => {
               sx={{ width: "180%" }}
               {...register("numeroDocumento")}
             />
-
             <TextField
               id="nombre-input"
               label="Dirección"
