@@ -36,6 +36,11 @@ const Form = () => {
 
   console.log(errors);
 
+  //Funcion para obtener los datos del formulario
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   // Estado del valor seleccionado
   const [valorSeleccion, setValor] = useState(null);
 
@@ -72,11 +77,6 @@ const Form = () => {
     }
   };
 
-  //Funcion para obtener los datos del formulario
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
-
   return (
     <Paper
       sx={{
@@ -101,25 +101,29 @@ const Form = () => {
             {/* Nombre */}
             <TextField
               id="nombre-input"
-              label="Nombre"
+              label="Nombre *"
               variant="outlined"
               {...register("nombre", {
                 required: "El campo nombre es obligatorio", // mensaje personalizado
               })}
-              sx={{
-                width: "180%",
-              }}
               //Todos los campos que devuelva la funcion register seran asignados a TextField
               error={errors.nombre} // asignar el error al atributo error
               helperText={errors.nombre?.message} // mostrar el mensaje de error
+              sx={{
+                width: "180%",
+              }}
             />
 
             <TextField
               id="apellido-input"
-              label="Apellido"
+              label="Apellido *"
               variant="outlined"
               sx={{ width: "180%" }}
-              {...register("Apellido")}
+              {...register("apellido", {
+                required: "El campo apellido es obligatorio", // mensaje personalizado
+              })}
+              error={errors.apellido} // asignar el error al atributo error
+              helperText={errors.apellido?.message} // mostrar el mensaje de error
             />
             {/* Tipo de documento */}
             <Autocomplete
@@ -138,7 +142,7 @@ const Form = () => {
                 />
               )}
             />
-            {/* Número de documento */}
+            {/*//! Número de documento */}
             <TextField
               id="numero-documento-input"
               label="Número de documento"
@@ -150,12 +154,16 @@ const Form = () => {
             />
             <TextField
               id="nombre-input"
-              label="Dirección"
+              label="Dirección *"
               variant="outlined"
               sx={{
                 width: "180%",
               }}
-              {...register("direccion")}
+              {...register("direccion", {
+                required: "El campo dirección es obligatorio", // mensaje personalizado
+              })}
+              error={errors.direccion} // asignar el error al atributo error
+              helperText={errors.direccion?.message} // mostrar el mensaje de error
             />
           </Box>
 
@@ -179,6 +187,7 @@ const Form = () => {
                 gap: 2,
               }}
             >
+              {/*//! Telefono */}
               <TextField
                 id="telefono-fijo-input"
                 label="Teléfono fijo"
@@ -263,22 +272,30 @@ const Form = () => {
             >
               <TextField
                 id="nombre-input"
-                label="Correo#1"
+                label="Correo principal *"
                 variant="outlined"
+                {...register("correoUno", {
+                  required: "El campo correo principal es obligatorio", // mensaje personalizado
+                })}
+                error={errors.correoUno} // asignar el error al atributo error
+                helperText={errors.correoUno?.message} // mostrar el mensaje de error
                 sx={{
                   width: "180%",
                 }}
-                {...register("correoUno")}
               />
 
               <TextField
                 id="nombre-input"
-                label="Correo#2"
+                label="Correo secundario *"
                 variant="outlined"
+                {...register("correoDos", {
+                  required: "El campo correo secundario es obligatorio", // mensaje personalizado
+                })}
+                error={errors.correoDos} // asignar el error al atributo error
+                helperText={errors.correoDos?.message} // mostrar el mensaje de error
                 sx={{
                   width: "180%",
                 }}
-                {...register("correoDos")}
               />
             </Box>
           </Box>
