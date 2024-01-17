@@ -30,7 +30,7 @@ const DateComponent = () => {
       }
 
       case "invalidDate": {
-        return "Your date is not valid";
+        return "fecha invalida";
       }
 
       default: {
