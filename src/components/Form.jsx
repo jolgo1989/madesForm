@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import "./Form.css";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FaRegUser } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import Date from "./Date";
 import {
   Paper,
   TextField,
@@ -17,8 +15,6 @@ import {
   FormLabel,
 } from "@mui/material";
 
-import { useForm } from "react-hook-form";
-
 // Opciones de tipo de documento
 const tipos = [
   { label: "Tarjeta de identidad", value: "TI" },
@@ -29,6 +25,7 @@ const tipos = [
 
 const Form = () => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -219,12 +216,8 @@ const Form = () => {
                 gap: 2,
               }}
             >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
-                  <DatePicker label="Fecha de nacimiento" />
-                </DemoContainer>
-              </LocalizationProvider>
-
+              <Date control={control} errors={errors} />{" "}
+              {/* Compoenente fecha de nacimiento */}
               <FormControl>
                 <FormLabel
                   sx={{

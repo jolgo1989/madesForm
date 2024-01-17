@@ -1,13 +1,11 @@
 import "./App.css";
 import Form from "./components/Form";
-import FormPrueba from "./components/FormPrueba";
 
 function App() {
   return (
     <div>
       <section>
-        {/* <Form /> */}
-        <FormPrueba />
+        <Form />
       </section>
     </div>
   );
