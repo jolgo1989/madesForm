@@ -1,14 +1,13 @@
 import "./App.css";
 import Form from "./components/Form";
-import DateComponent from "./components/DateComponent";
+import FormPrueba from "./components/FormPrueba";
 
 function App() {
   return (
     <div>
       <section>
-        <Form />
-
-        <DateComponent />
+        {/* <Form /> */}
+        <FormPrueba />
       </section>
     </div>
   );
