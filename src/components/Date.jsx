@@ -16,11 +16,11 @@ const Date = ({ control, errors }) => {
     switch (error) {
       case "maxDate":
       case "minDate": {
-        return "Please select a date in the first quarter of 2022";
+        return "Seleccione una fecha entre 1900 y 2099";
       }
 
       case "invalidDate": {
-        return "fecha invalida";
+        return "Fecha invalida";
       }
 
       default: {
@@ -37,7 +37,7 @@ const Date = ({ control, errors }) => {
       rules={{
         required: {
           value: true,
-          message: "Campo requerido",
+          message: "Campo obligatorio",
         },
       }}
       render={({ field }) => (

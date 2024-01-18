@@ -216,8 +216,9 @@ const Form = () => {
                 gap: 2,
               }}
             >
-              <Date control={control} errors={errors} />{" "}
               {/* Compoenente fecha de nacimiento */}
+              <Date control={control} errors={errors} />
+
               <FormControl>
                 <FormLabel
                   sx={{
