@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Form.css";
 import { FaRegUser } from "react-icons/fa";
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
 import Date from "./Date";
 import {
   Paper,
@@ -24,18 +24,23 @@ const tipos = [
 ];
 
 const Form = () => {
+  // Utiliza el hook useForm para inicializar el control del formulario y gestionar su estado
   const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm(); //Registrar cada input
+    control, // Proporciona control sobre los campos del formulario
+    register, // Función para registrar campos en el formulario
+    handleSubmit, // Función que se llama al enviar el formulario
+    formState: { errors }, // Objeto que contiene los errores del formulario
+    trigger,
+    reset, // Función para restablecer los valores del formulario
+  } = useForm();
 
+  //! Atento a esto creo que se debe quitar
   console.log(errors);
 
   //Funcion para obtener los datos del formulario
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    reset();
   });
 
   // Estado del valor seleccionado
@@ -49,16 +54,8 @@ const Form = () => {
 
   //! TextField solo numero Analizarlo
 
-  const [numeroDocumento, setNumeroDocumento] = useState("");
   const [telefonoFijo, setTelefonoFijo] = useState("");
   const [celular, setCelular] = useState("");
-
-  const handleChangeNumeroDocumento = (event) => {
-    const valor = event.target.value;
-    if (!isNaN(valor) && !valor.includes(".")) {
-      setNumeroDocumento(valor);
-    }
-  };
 
   const handleChangeTelefonoFijo = (event) => {
     const valor = event.target.value;
@@ -138,7 +135,7 @@ const Form = () => {
                   {...params}
                   label="Tipo de documento"
                   variant="outlined"
-                  {...register("tipoDeDocumento")}
+                  // {...register("tipoDeDocumento")}
                 />
               )}
             />
@@ -147,10 +144,22 @@ const Form = () => {
               id="numero-documento-input"
               label="Número de documento"
               variant="outlined"
-              value={numeroDocumento}
-              onChange={handleChangeNumeroDocumento}
               sx={{ width: "180%" }}
-              {...register("numeroDocumento")}
+              {...register("documento", {
+                required: {
+                  value: true,
+                  message: "Campo documento es obligatorio",
+                },
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Ingrese solo numeros",
+                },
+              })}
+              onKeyUp={() => {
+                trigger("documento");
+              }}
+              error={errors.documento} // asignar el error al atributo error
+              helperText={errors.documento?.message} // mostrar el mensaje de error
             />
             <TextField
               id="nombre-input"
@@ -195,7 +204,7 @@ const Form = () => {
                 value={telefonoFijo}
                 onChange={handleChangeTelefonoFijo}
                 sx={{ width: "70%" }}
-                {...register("telefonoFijo")}
+                // {...register("telefonoFijo")}
               />
 
               <TextField
@@ -205,7 +214,7 @@ const Form = () => {
                 value={celular}
                 onChange={handleChangeCelular}
                 sx={{ width: "70%" }}
-                {...register("celular")}
+                // {...register("celular")}
               />
             </Box>
 

@@ -4,7 +4,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import dayjs from "dayjs";
-import "dayjs/locale/ES"; // Importar libreria para cambiar idioma del calendario
+import "dayjs/locale/es"; // Importar libreria para cambiar idioma del calendario
 
 const startOfQ12022 = dayjs("1900-01-01T00:00:00.000");
 const endOfQ12022 = dayjs("2099-12-31T23:59:59.999");
@@ -43,7 +43,7 @@ const Date = ({ control, errors }) => {
       render={({ field }) => (
         <LocalizationProvider
           dateAdapter={AdapterDayjs}
-          adapterLocale="ES" /*Aplicar libreria para cambiar idiama a español*/
+          adapterLocale="es" /*Aplicar libreria para cambiar idiama a español*/
         >
           <DatePicker
             label="Fecha de nacimiento"
