@@ -94,20 +94,28 @@ const Form = () => {
           >
             {/* Nombre */}
             <TextField
-              id="nombre-input"
-              label="Nombre *"
-              variant="outlined"
+              id="nombre-input" //Proporciona un identificador único al TextField.
+              label="Nombre *" //Etiqueta que se muestra sobre el TextField para indicar qué tipo de información se espera.
+              variant="outlined" //ndica el estilo de diseño del TextField, en este caso, "outlined".
               {...register("nombre", {
+                //required: Indica que el campo es obligatorio.
                 required: {
                   value: true,
-                  message: "El campo nombre es obligatorio", // mensaje personalizado
+                  message: "El campo nombre es obligatorio", // Mensaje personalizado si no se proporciona un nombre
+                },
+                minLength: {
+                  value: 3,
+                  message: "Ingrese al menos 3 caracteres para el nombre.", // Mensaje si el nombre es demasiado corto
+                },
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: "Use solo letras en el nombre", // Mensaje si se ingresan caracteres no permitidos
                 },
               })}
-              //Todos los campos que devuelva la funcion register seran asignados a TextField
-              error={errors.nombre} // asignar el error al atributo error
-              helperText={errors.nombre?.message} // mostrar el mensaje de error
+              error={errors.nombre} // Propiedad para asignar el estado de error al TextField
+              helperText={errors.nombre?.message} // Mensaje de ayuda que muestra el mensaje de error personalizado
               sx={{
-                width: "180%",
+                width: "180%", //Propiedad de estilo para establecer el ancho del TextField.
               }}
             />
 
@@ -142,17 +150,25 @@ const Form = () => {
             {/*//! Número de documento */}
             <TextField
               id="numero-documento-input"
-              label="Número de documento"
+              label="Número de documento *"
               variant="outlined"
               sx={{ width: "180%" }}
               {...register("documento", {
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Ingrese solo numeros",
+                },
                 required: {
                   value: true,
                   message: "Campo documento es obligatorio",
                 },
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: "Ingrese solo numeros",
+                minLength: {
+                  value: 8,
+                  message: "Campo cedula debe tener al menos 8 digitos",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Campo cedula debe tener máximo 10 digitos",
                 },
               })}
               onKeyUp={() => {
@@ -161,6 +177,7 @@ const Form = () => {
               error={errors.documento} // asignar el error al atributo error
               helperText={errors.documento?.message} // mostrar el mensaje de error
             />
+
             <TextField
               id="nombre-input"
               label="Dirección *"
