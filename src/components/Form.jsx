@@ -52,25 +52,6 @@ const Form = () => {
     setValor(newValue);
   };
 
-  //! TextField solo numero Analizarlo
-
-  const [telefonoFijo, setTelefonoFijo] = useState("");
-  const [celular, setCelular] = useState("");
-
-  const handleChangeTelefonoFijo = (event) => {
-    const valor = event.target.value;
-    if (!isNaN(valor) && !valor.includes(".")) {
-      setTelefonoFijo(valor);
-    }
-  };
-
-  const handleChangeCelular = (event) => {
-    const valor = event.target.value;
-    if (!isNaN(valor) && !valor.includes(".")) {
-      setCelular(valor);
-    }
-  };
-
   return (
     <Paper
       sx={{
@@ -183,9 +164,10 @@ const Form = () => {
                   message: "Utilice solo caracteres numéricos",
                 },
                 //  validación personalizada del valor ingresado en un campo de formulario
+
                 validate: (value) => {
-                  if (value.length < 4 || value.length > 20) {
-                    return "Ingrese un número de documento de 4 a 20 caracteres.";
+                  if (value.length < 4 || value.length > 10) {
+                    return "Solo se acepta números, máximo 10 caracteres";
                   }
                   return true; // Retornar true si la validación es exitosa.
                 },
@@ -356,7 +338,7 @@ const Form = () => {
                 {...register("correoUno", {
                   required: {
                     value: true,
-                    message: "El campo correo principal es obligatorio", // mensaje personalizado
+                    message: "El campo requerido", // mensaje personalizado
                   },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -365,6 +347,9 @@ const Form = () => {
                 })}
                 error={errors.correoUno} // asignar el error al atributo error
                 helperText={errors.correoUno?.message} // mostrar el mensaje de error
+                onKeyUp={() => {
+                  trigger("correoUno");
+                }}
                 sx={{
                   width: "180%",
                 }}
@@ -377,7 +362,7 @@ const Form = () => {
                 {...register("correoDos", {
                   required: {
                     value: true,
-                    message: "El campo correo secundario es obligatorio", // mensaje personalizado
+                    message: "El campo requerido", // mensaje personalizado
                   },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -386,6 +371,9 @@ const Form = () => {
                 })}
                 error={errors.correoDos} // asignar el error al atributo error
                 helperText={errors.correoDos?.message} // mostrar el mensaje de error
+                onKeyUp={() => {
+                  trigger("correoDos");
+                }}
                 sx={{
                   width: "180%",
                 }}
