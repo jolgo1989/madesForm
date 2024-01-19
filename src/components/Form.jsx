@@ -30,7 +30,7 @@ const Form = () => {
     register, // Función para registrar campos en el formulario
     handleSubmit, // Función que se llama al enviar el formulario
     formState: { errors }, // Objeto que contiene los errores del formulario
-    trigger,
+    trigger, // Función para activar la validación de todos los campos
     reset, // Función para restablecer los valores del formulario
   } = useForm();
 
@@ -101,17 +101,21 @@ const Form = () => {
                 //required: Indica que el campo es obligatorio.
                 required: {
                   value: true,
-                  message: "El campo nombre es obligatorio", // Mensaje personalizado si no se proporciona un nombre
+                  message: "Campo requerido", // Mensaje personalizado si no se proporciona un nombre
                 },
                 minLength: {
                   value: 3,
-                  message: "Ingrese al menos 3 caracteres para el nombre.", // Mensaje si el nombre es demasiado corto
+                  message: "Utilice al menos 3 caracteres para el nombre.", // Mensaje si el nombre es demasiado corto
                 },
                 pattern: {
                   value: /^[a-zA-Z\s]+$/,
-                  message: "Use solo letras en el nombre", // Mensaje si se ingresan caracteres no permitidos
+                  message: "Utilice solo caracteres alfabéticos", // Mensaje si se ingresan caracteres no permitidos
                 },
               })}
+              // El evento onKeyUp activa la validación del campo "nombre" cada vez que se suelta una tecla.
+              onKeyUp={() => {
+                trigger("nombre");
+              }}
               error={errors.nombre} // Propiedad para asignar el estado de error al TextField
               helperText={errors.nombre?.message} // Mensaje de ayuda que muestra el mensaje de error personalizado
               sx={{
@@ -119,17 +123,33 @@ const Form = () => {
               }}
             />
 
+            {/* Apellido */}
             <TextField
               id="apellido-input"
               label="Apellido *"
               variant="outlined"
               sx={{ width: "180%" }}
               {...register("apellido", {
-                required: "El campo apellido es obligatorio", // mensaje personalizado
+                required: {
+                  value: true,
+                  message: "Campo requerido",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Utilice al menos 3 caracteres para el apellido.",
+                },
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: "Utilice solo caracteres alfabéticos",
+                },
               })}
-              error={errors.apellido} // asignar el error al atributo error
-              helperText={errors.apellido?.message} // mostrar el mensaje de error
+              onKeyUp={() => {
+                trigger("apellido");
+              }}
+              error={errors.apellido}
+              helperText={errors.apellido?.message}
             />
+
             {/* Tipo de documento */}
             <Autocomplete
               id="selector-tipo"
@@ -137,7 +157,6 @@ const Form = () => {
               getOptionLabel={(option) => option.label}
               // value={valorSeleccion}
               // onChange={handleChange}
-              sx={{}}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -147,37 +166,38 @@ const Form = () => {
                 />
               )}
             />
-            {/*//! Número de documento */}
+
+            {/* Numeros de documento */}
             <TextField
               id="numero-documento-input"
               label="Número de documento *"
               variant="outlined"
               sx={{ width: "180%" }}
               {...register("documento", {
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: "Ingrese solo numeros",
-                },
                 required: {
                   value: true,
-                  message: "Campo documento es obligatorio",
+                  message: "Campo requerido",
                 },
-                minLength: {
-                  value: 8,
-                  message: "Campo cedula debe tener al menos 8 digitos",
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Utilice solo caracteres numéricos",
                 },
-                maxLength: {
-                  value: 10,
-                  message: "Campo cedula debe tener máximo 10 digitos",
+                //  validación personalizada del valor ingresado en un campo de formulario
+                validate: (value) => {
+                  if (value.length < 4 || value.length > 20) {
+                    return "Ingrese un número de documento de 4 a 20 caracteres.";
+                  }
+                  return true; // Retornar true si la validación es exitosa.
                 },
               })}
               onKeyUp={() => {
                 trigger("documento");
               }}
-              error={errors.documento} // asignar el error al atributo error
-              helperText={errors.documento?.message} // mostrar el mensaje de error
+              error={errors.documento}
+              helperText={errors.documento?.message}
             />
 
+            {/* Dirección */}
             <TextField
               id="nombre-input"
               label="Dirección *"
@@ -186,10 +206,13 @@ const Form = () => {
                 width: "180%",
               }}
               {...register("direccion", {
-                required: "El campo dirección es obligatorio", // mensaje personalizado
+                required: "Campo requerido",
               })}
-              error={errors.direccion} // asignar el error al atributo error
-              helperText={errors.direccion?.message} // mostrar el mensaje de error
+              onKeyUp={() => {
+                trigger("documento");
+              }}
+              error={errors.direccion}
+              helperText={errors.direccion?.message}
             />
           </Box>
 
@@ -218,20 +241,56 @@ const Form = () => {
                 id="telefono-fijo-input"
                 label="Teléfono fijo"
                 variant="outlined"
-                value={telefonoFijo}
-                onChange={handleChangeTelefonoFijo}
+                {...register("telFijo", {
+                  required: {
+                    value: true,
+                    message: "Campo requerido",
+                  },
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Utilice solo caracteres numéricos",
+                  },
+                  validate: (value) => {
+                    if (value.length !== 10) {
+                      return "Ingrese el indicativo de su ciudad seguido de su número de teléfono fijo.";
+                    }
+                    return true; // Retornar true si la validación es exitosa.
+                  },
+                })}
                 sx={{ width: "70%" }}
-                // {...register("telefonoFijo")}
+                onKeyUp={() => {
+                  trigger("telFijo");
+                }}
+                error={errors.telFijo}
+                helperText={errors.telFijo?.message}
               />
 
               <TextField
                 id="celular-input"
                 label="Celular"
                 variant="outlined"
-                value={celular}
-                onChange={handleChangeCelular}
+                {...register("celular", {
+                  required: {
+                    value: true,
+                    message: "Campo requerido",
+                  },
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Utilice solo caracteres numéricos",
+                  },
+                  validate: (value) => {
+                    if (value.length !== 10) {
+                      return "Ingrese un número de celular de 10 dígitos.";
+                    }
+                    return true; // Retornar true si la validación es exitosa.
+                  },
+                })}
                 sx={{ width: "70%" }}
-                // {...register("celular")}
+                onKeyUp={() => {
+                  trigger("celular");
+                }}
+                error={errors.celular}
+                helperText={errors.celular?.message}
               />
             </Box>
 
