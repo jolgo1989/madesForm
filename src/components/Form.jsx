@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import "./Form.css";
 import { FaRegUser } from "react-icons/fa";
-import { useForm } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
+import { useForm, Controller } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
 import Date from "./Date";
 import {
   Paper,
@@ -35,22 +34,13 @@ const Form = () => {
   } = useForm();
 
   //! Atento a esto creo que se debe quitar
-  console.log(errors);
+  // console.log(errors);
 
   //Funcion para obtener los datos del formulario
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     reset();
   });
-
-  // Estado del valor seleccionado
-  const [valorSeleccion, setValor] = useState(null);
-
-  // Manejador del cambio de valor
-  const handleChange = (event, newValue) => {
-    //!Pendiente con el metodo event
-    setValor(newValue);
-  };
 
   return (
     <Paper
@@ -103,7 +93,6 @@ const Form = () => {
                 width: "180%", //Propiedad de estilo para establecer el ancho del TextField.
               }}
             />
-
             {/* Apellido */}
             <TextField
               id="apellido-input"
@@ -130,24 +119,34 @@ const Form = () => {
               error={errors.apellido}
               helperText={errors.apellido?.message}
             />
-
             {/* Tipo de documento */}
-            <Autocomplete
-              id="selector-tipo"
-              options={tipos}
-              getOptionLabel={(option) => option.label}
-              // value={valorSeleccion}
-              // onChange={handleChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Tipo de documento"
-                  variant="outlined"
-                  // {...register("tipoDeDocumento")}
+
+            <Controller
+              name="tipoDocumento"
+              control={control}
+              rules={{ required: "Campo requerido" }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <Autocomplete
+                  id="selector-tipo"
+                  options={tipos}
+                  value={value}
+                  onChange={(e, newValue) => {
+                    onChange(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Tipo de documento"
+                      error={!!error}
+                      helperText={error ? error.message : null}
+                    />
+                  )}
                 />
               )}
             />
-
             {/* Numeros de documento */}
             <TextField
               id="numero-documento-input"
@@ -178,7 +177,6 @@ const Form = () => {
               error={errors.documento}
               helperText={errors.documento?.message}
             />
-
             {/* Dirección */}
             <TextField
               id="nombre-input"
@@ -218,7 +216,7 @@ const Form = () => {
                 gap: 2,
               }}
             >
-              {/*//! Telefono */}
+              {/* Telefono */}
               <TextField
                 id="telefono-fijo-input"
                 label="Teléfono fijo"
