@@ -65,6 +65,9 @@ const Form = () => {
           >
             {/* Nombre */}
             <TextField
+              sx={{
+                width: "180%", //Propiedad de estilo para establecer el ancho del TextField.
+              }}
               id="nombre-input" //Proporciona un identificador único al TextField.
               label="Nombre *" //Etiqueta que se muestra sobre el TextField para indicar qué tipo de información se espera.
               variant="outlined" //ndica el estilo de diseño del TextField, en este caso, "outlined".
@@ -89,9 +92,6 @@ const Form = () => {
               }}
               error={errors.nombre} // Propiedad para asignar el estado de error al TextField
               helperText={errors.nombre?.message} // Mensaje de ayuda que muestra el mensaje de error personalizado
-              sx={{
-                width: "180%", //Propiedad de estilo para establecer el ancho del TextField.
-              }}
             />
             {/* Apellido */}
             <TextField
