@@ -1,5 +1,6 @@
 import { FaRegUser } from "react-icons/fa";
 import { useForm, Controller } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
+import { useTheme } from "@mui/material/styles";
 import Date from "./Date";
 import {
   Paper,
@@ -42,32 +43,50 @@ const PruebaForm = () => {
     reset();
   });
 
+  const theme = useTheme();
+
   return (
     <Paper
       sx={{
         mt: 8,
         px: 4,
         py: 2,
-        maxWidth: 1100,
+        maxWidth: 700,
         mx: "auto",
       }}
       elevation={3}
     >
       <Container
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-around",
+          [theme.breakpoints.up("md")]: {
+            flexDirection: "row",
+          },
+        }}
       >
         {/* Imagen */}
-        <Box sx={{ fontSize: 120 }}>
+        <Box
+          sx={{
+            display: "flex",
+            fontSize: 130,
+            my: 2,
+            [theme.breakpoints.up("md")]: {
+              order: 1,
+            },
+          }}
+        >
           <FaRegUser />
         </Box>
-
         <Box
           sx={{
             display: "flex",
             flexDirection: "column", // Alinear los elementos en una fila
-
             gap: 2,
-            width: 350,
+            width: "100%",
+
             //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
           }}
         >
@@ -123,8 +142,74 @@ const PruebaForm = () => {
             error={errors.apellido}
             helperText={errors.apellido?.message}
           />
-          {/* Tipo de documento */}
         </Box>
+      </Container>
+
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-around",
+          gap: 2,
+          my: 2,
+        }}
+      >
+        <Controller
+          name="tipoDocumento"
+          control={control}
+          rules={{ required: "Campo requerido" }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <Autocomplete
+              id="selector-tipo"
+              options={tipos}
+              value={value}
+              onChange={(e, newValue) => {
+                onChange(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Tipo de documento"
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+            />
+          )}
+        />
+        {/* Numeros de documento */}
+        <TextField
+          sx={{
+            width: "100%",
+          }}
+          id="numero-documento-input"
+          label="Número de documento *"
+          variant="outlined"
+          {...register("documento", {
+            required: {
+              value: true,
+              message: "Campo requerido",
+            },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Utilice solo caracteres numéricos",
+            },
+            //  validación personalizada del valor ingresado en un campo de formulario
+
+            validate: (value) => {
+              if (value.length < 4 || value.length > 10) {
+                return "Solo se acepta números, máximo 10 caracteres";
+              }
+              return true; // Retornar true si la validación es exitosa.
+            },
+          })}
+          onKeyUp={() => {
+            trigger("documento");
+          }}
+          error={errors.documento}
+          helperText={errors.documento?.message}
+        />
       </Container>
     </Paper>
   );

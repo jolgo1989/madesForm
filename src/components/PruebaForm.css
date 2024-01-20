@@ -1,0 +1,29 @@
+.textImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  .image {
+    display: flex;
+    font-size: 8.125rem;
+    margin: 0.5rem 0;
+  }
+}
+
+.documenType {
+  display: flex;
+  flex-direction: column;
+  margin: 2px;
+}
+
+@media screen and (min-width: 990px) {
+  .textImg {
+    flex-direction: row;
+    .image {
+      order: 1;
+    }
+  }
+}
+
+/* display: "flex", fontSize: 130, my: 2 } */
