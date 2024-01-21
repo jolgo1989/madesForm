@@ -2,7 +2,7 @@ import { FaRegUser } from "react-icons/fa"; // Importar imagen desde react-icons
 import { useForm, Controller } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
 import { useTheme } from "@mui/material/styles";
 import Date from "./Date";
-import { Paper, TextField, Box, Autocomplete } from "@mui/material";
+import { Paper, TextField, Box, Autocomplete, Button } from "@mui/material";
 
 // Opciones de tipo de documento
 const tipos = [
@@ -369,7 +369,16 @@ const PruebaForm = () => {
             }}
           />
         </Box>
-        <button type="submit">Enviar</button>
+
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            my: 2,
+          }}
+        >
+          Enviar
+        </Button>
       </form>
     </Paper>
   );
