@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { FaRegUser } from "react-icons/fa"; // Importar imagen desde react-icons
 import { useForm, Controller } from "react-hook-form"; // Importa el hook useForm desde la librería react-hook-form
 import { useTheme } from "@mui/material/styles";
@@ -18,10 +19,22 @@ const PruebaForm = () => {
     control, // Proporciona control sobre los campos del formulario
     register, // Función para registrar campos en el formulario
     handleSubmit, // Función que se llama al enviar el formulario
-    formState: { errors }, // Objeto que contiene los errores del formulario
+    formState: { errors, isSubmitSuccessful }, // Objeto que contiene los errores del formulario
     trigger, // Función para activar la validación de todos los campos
     reset, // Función para restablecer los valores del formulario
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      nombre: "",
+      apellido: "",
+      tipoDocumento: "",
+      documento: "",
+      telFijo: "",
+      celular: "",
+      direccion: "",
+      correoUno: "",
+      correoDos: "",
+    },
+  });
 
   //Mostrar error al enviar el formulario vacio
   console.log(errors);
@@ -29,8 +42,14 @@ const PruebaForm = () => {
   //Funcion para obtener los datos del formulario
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    reset();
   });
+
+  // Usa useEffect para restablecer el formulario cuando se envíe con éxito
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   const theme = useTheme(); // Obtener el objeto de tema usando el hook useTheme
 
@@ -300,7 +319,7 @@ const PruebaForm = () => {
             required: "Campo requerido",
           })}
           onKeyUp={() => {
-            trigger("documento");
+            trigger("direccion");
           }}
           error={errors.direccion}
           helperText={errors.direccion?.message}

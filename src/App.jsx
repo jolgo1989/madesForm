@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <section>
-        {/* <Form /> */}
+        <Form />
         <PruebaForm />
       </section>
     </div>
