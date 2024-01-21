@@ -262,12 +262,14 @@ const Form = () => {
                 message: "Campo requerido",
               },
               pattern: {
-                value: /^[0-9]+$/,
-                message: "Utilice solo caracteres numéricos",
+                value: /^6\d{0,9}$/,
+
+                message:
+                  "Ingrese un número válido iniciando con el indicativo de su ciudad.",
               },
               validate: (value) => {
                 if (value.length !== 10) {
-                  return "Ingrese el indicativo de su ciudad seguido de su número de teléfono fijo.";
+                  return "utilice máximo de 10 dígitos numéricos.";
                 }
                 return true; // Retornar true si la validación es exitosa.
               },
