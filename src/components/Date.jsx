@@ -49,6 +49,9 @@ const Date = ({ control, errors }) => {
           adapterLocale="es" /*Aplicar libreria para cambiar idiama a español*/
         >
           <DatePicker // Componente de selección de fechas
+            sx={{
+              width: "100%",
+            }}
             label="Fecha de nacimiento"
             {...field}
             onError={(newError) => setError(newError)}

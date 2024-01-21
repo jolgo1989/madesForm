@@ -51,7 +51,7 @@ const PruebaForm = () => {
         mt: 8,
         px: 4,
         py: 2,
-        maxWidth: 700,
+        maxWidth: 850,
         mx: "auto",
       }}
       elevation={3}
@@ -86,8 +86,10 @@ const PruebaForm = () => {
             flexDirection: "column", // Alinear los elementos en una fila
             gap: 2,
             width: "100%",
-
-            //! flexWrap: "wrap", // Envolver a la siguiente línea si no hay espacio suficiente
+            mr: 4,
+            [theme.breakpoints.down("md")]: {
+              mr: 0,
+            },
           }}
         >
           {/* Nombre */}
@@ -153,6 +155,9 @@ const PruebaForm = () => {
           justifyContent: "space-around",
           gap: 2,
           my: 2,
+          [theme.breakpoints.up("md")]: {
+            flexDirection: "row",
+          },
         }}
       >
         <Controller
@@ -161,6 +166,10 @@ const PruebaForm = () => {
           rules={{ required: "Campo requerido" }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Autocomplete
+              sx={{
+                width: "100%",
+                // maxWidth: 350,
+              }}
               id="selector-tipo"
               options={tipos}
               value={value}
@@ -210,6 +219,9 @@ const PruebaForm = () => {
           error={errors.documento}
           helperText={errors.documento?.message}
         />
+
+        {/* Compoenente fecha de nacimiento */}
+        <Date control={control} errors={errors} />
       </Container>
     </Paper>
   );
