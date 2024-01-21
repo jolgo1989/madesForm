@@ -56,12 +56,13 @@ const PruebaForm = () => {
       }}
       elevation={3}
     >
-      <Container
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-around",
+
           [theme.breakpoints.up("md")]: {
             flexDirection: "row",
           },
@@ -145,21 +146,23 @@ const PruebaForm = () => {
             helperText={errors.apellido?.message}
           />
         </Box>
-      </Container>
+      </Box>
 
-      <Container
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-around",
           gap: 2,
-          my: 2,
+          mt: 2,
           [theme.breakpoints.up("md")]: {
             flexDirection: "row",
+            mt: 0,
           },
         }}
       >
+        {/* Tipo de documento */}
         <Controller
           name="tipoDocumento"
           control={control}
@@ -168,7 +171,6 @@ const PruebaForm = () => {
             <Autocomplete
               sx={{
                 width: "100%",
-                // maxWidth: 350,
               }}
               id="selector-tipo"
               options={tipos}
@@ -222,7 +224,157 @@ const PruebaForm = () => {
 
         {/* Compoenente fecha de nacimiento */}
         <Date control={control} errors={errors} />
-      </Container>
+        {/* Telefono */}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-around",
+          gap: 2,
+          mt: 2,
+          [theme.breakpoints.up("md")]: {
+            flexDirection: "row",
+          },
+        }}
+      >
+        <TextField
+          sx={{ width: "100%" }}
+          id="telefono-fijo-input"
+          label="Teléfono fijo"
+          variant="outlined"
+          {...register("telFijo", {
+            required: {
+              value: true,
+              message: "Campo requerido",
+            },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Utilice solo caracteres numéricos",
+            },
+            validate: (value) => {
+              if (value.length !== 10) {
+                return "Ingrese el indicativo de su ciudad seguido de su número de teléfono fijo.";
+              }
+              return true; // Retornar true si la validación es exitosa.
+            },
+          })}
+          onKeyUp={() => {
+            trigger("telFijo");
+          }}
+          error={errors.telFijo}
+          helperText={errors.telFijo?.message}
+        />
+
+        <TextField
+          sx={{ width: "100%" }}
+          id="celular-input"
+          label="Celular"
+          variant="outlined"
+          {...register("celular", {
+            required: {
+              value: true,
+              message: "Campo requerido",
+            },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Utilice solo caracteres numéricos",
+            },
+            validate: (value) => {
+              if (value.length !== 10) {
+                return "Ingrese un número de celular de 10 dígitos.";
+              }
+              return true; // Retornar true si la validación es exitosa.
+            },
+          })}
+          onKeyUp={() => {
+            trigger("celular");
+          }}
+          error={errors.celular}
+          helperText={errors.celular?.message}
+        />
+      </Box>
+      {/* Dirección */}
+      <TextField
+        sx={{
+          width: "100%",
+          mt: 2,
+        }}
+        id="nombre-input"
+        label="Dirección *"
+        variant="outlined"
+        {...register("direccion", {
+          required: "Campo requerido",
+        })}
+        onKeyUp={() => {
+          trigger("documento");
+        }}
+        error={errors.direccion}
+        helperText={errors.direccion?.message}
+      />
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-around",
+          gap: 2,
+          mt: 2,
+          [theme.breakpoints.up("md")]: {
+            flexDirection: "row",
+          },
+        }}
+      >
+        <TextField
+          sx={{
+            width: "100%",
+          }}
+          id="nombre-input"
+          label="Correo principal *"
+          variant="outlined"
+          {...register("correoUno", {
+            required: {
+              value: true,
+              message: "El campo requerido", // mensaje personalizado
+            },
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Correo no valido",
+            },
+          })}
+          error={errors.correoUno} // asignar el error al atributo error
+          helperText={errors.correoUno?.message} // mostrar el mensaje de error
+          onKeyUp={() => {
+            trigger("correoUno");
+          }}
+        />
+
+        <TextField
+          sx={{
+            width: "100%",
+          }}
+          id="nombre-input"
+          label="Correo secundario *"
+          variant="outlined"
+          {...register("correoDos", {
+            required: {
+              value: true,
+              message: "El campo requerido", // mensaje personalizado
+            },
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Correo no valido",
+            },
+          })}
+          error={errors.correoDos} // asignar el error al atributo error
+          helperText={errors.correoDos?.message} // mostrar el mensaje de error
+          onKeyUp={() => {
+            trigger("correoDos");
+          }}
+        />
+      </Box>
     </Paper>
   );
 };

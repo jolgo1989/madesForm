@@ -182,9 +182,6 @@ const Form = () => {
               id="nombre-input"
               label="Dirección *"
               variant="outlined"
-              sx={{
-                width: "180%",
-              }}
               {...register("direccion", {
                 required: "Campo requerido",
               })}
@@ -283,43 +280,6 @@ const Form = () => {
             >
               {/* Compoenente fecha de nacimiento */}
               <Date control={control} errors={errors} />
-
-              <FormControl>
-                <FormLabel
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center", // Alinear los elementos en una fila
-                  }}
-                  id="demo-radio-buttons-group-label"
-                >
-                  Genero
-                </FormLabel>
-                <RadioGroup
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row", // Alinear los elementos en una fila
-                  }}
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Femenino"
-                  />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Masculino"
-                  />
-                  <FormControlLabel
-                    value="other"
-                    control={<Radio />}
-                    label="Otro"
-                  />
-                </RadioGroup>
-              </FormControl>
             </Box>
 
             <Box
