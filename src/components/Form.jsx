@@ -269,7 +269,7 @@ const Form = () => {
               },
               validate: (value) => {
                 if (value.length !== 10) {
-                  return "utilice máximo de 10 dígitos numéricos.";
+                  return "Utilice máximo de 10 dígitos numéricos.";
                 }
                 return true; // Retornar true si la validación es exitosa.
               },
