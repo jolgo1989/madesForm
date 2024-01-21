@@ -24,6 +24,7 @@ const PruebaForm = () => {
     reset, // Función para restablecer los valores del formulario
   } = useForm({
     defaultValues: {
+      //valores iniciales de los camponentes
       nombre: "",
       apellido: "",
       tipoDocumento: "",

@@ -91,6 +91,7 @@ const Form = () => {
               />
             )}
           />
+          <Date control={control} errors={errors} />
         </div>
         <button type="submit">Enviar</button>
       </form>
